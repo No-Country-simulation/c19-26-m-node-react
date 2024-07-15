@@ -2,6 +2,8 @@ import express from "express"
 import cors from "cors"
 import session from "express-session"
 import dotenv from "dotenv"
+import UserRouter from "./Routes/user.routes.js"
+import DB from "./Config/db.config.js"
 
 const app = express()
 const PORT = process.env.PORT ?? 3000
@@ -19,9 +21,7 @@ app.use(session({
     cookie : {secure : true}
 })) //configuramos la session para trabajarla con JWT, de modo de manipularlo mas facilmente
 
-app.get("/",(req,res)=>{
-    res.send("Hi from to Back")
-})//devuelve un saludo basico en la ruta http://localhost:3000/
+app.use("/api/v1/users",UserRouter) //http://localhost:3000/api/v1/users/metodoUsar/id en caso de necesitar
 
 app.listen(PORT,()=>{
     console.log(`Server on Running in Port ${PORT}`)
