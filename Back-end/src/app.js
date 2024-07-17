@@ -12,15 +12,21 @@ const PORT = process.env.PORT ?? 3000
 dotenv.config() //configuro para poder utilizar variables de entorno
 
 
-app.use(express.json()) //Permite enviar en las querys formato JSON, mejorando la manipulacion de los datos
+app.use(express.json()) 
+
 app.use(express.urlencoded({extends : true}))
-app.use(cors()) //Permite compartir cosas del back al front
+const corsOptions = {
+    origin: "http://localhost:5173", // Asegúrate de que esta URL coincida con la URL de tu frontend
+    optionsSuccessStatus: 200
+  };
+  app.use(cors(corsOptions));
+
 app.use(session({
     secret : process.env.SECRET,
     resave : false,
     saveUninitialized : true,
-    cookie : {secure : true}
-})) //configuramos la session para trabajarla con JWT, de modo de manipularlo mas facilmente
+    cookie : {secure : false}
+})) 
 
 app.use("/api/v1/users",UserRouter) //http://localhost:3000/api/v1/users/metodoUsar/id en caso de necesitar
 
