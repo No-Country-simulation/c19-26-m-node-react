@@ -6,7 +6,14 @@ class UserManager extends BaseManager {
     super(User)
   }
 
-  //en caso de necesitar agregamos metodos unicos para usuarios
+  async getUserByEmail(email){
+    try {
+      const user = User.findOne({Correo_Electronico : email})
+      return user
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 const ManagerUser = new UserManager;
